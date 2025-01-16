@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.emp.Crud.entity.Employee;
 import com.emp.Crud.service.EmployeeService;
@@ -23,11 +24,13 @@ public class EmployeeController {
 
     @PostMapping("/save")
     public Employee createEmployee(@RequestBody Employee employee) {
+
         return employeeService.saveEmployee(employee);
     }
 
     @GetMapping("/view")
     public List<Employee> getEmployees() {
+
         return employeeService.getAllEmployees();
     }
 
@@ -35,5 +38,10 @@ public class EmployeeController {
     public String deleteEmployee(@PathVariable Long id) {
         employeeService.deleteEmployeeById(id);
         return "Employee with ID " + id + " has been deleted successfully.";
+    }
+
+    @PutMapping("/update/{id}")
+    public Employee updateEmployee(@PathVariable Long id, @RequestBody Employee employeeDetails) {
+        return employeeService.updateEmployee(id, employeeDetails);
     }
 }

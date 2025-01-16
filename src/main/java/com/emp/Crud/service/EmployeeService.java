@@ -25,4 +25,17 @@ public class EmployeeService {
     public void deleteEmployeeById(Long id) {
         employeeRepository.deleteById(id);
     }
+
+    public Employee updateEmployee(Long id, Employee employeeDetails) {
+        Employee existingEmployee = employeeRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Employee not found with ID: " + id));
+
+        // Update the fields
+        existingEmployee.setName(employeeDetails.getName());
+        existingEmployee.setDepartment(employeeDetails.getDepartment());
+        existingEmployee.setSalary(employeeDetails.getSalary());
+
+        // Save the updated employee back to the database
+        return employeeRepository.save(existingEmployee);
+    }
 }
